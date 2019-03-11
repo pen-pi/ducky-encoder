@@ -22,18 +22,17 @@ def stringToReport():
 def createReport():
    pass
 
-def stringToReport(string):
-   with open('/dev/hidg0', 'rb+') as fd:
-      #fd.write(report.encode())
-      for char in string:
-         if char == '\n':
-            continue
-         if char in shiftedLetters:
-            fd.write((SHIFT+NULL_CHAR+scancodes[char]+NULL_CHAR*5).encode())
+def stringToReport(string, dev):
+   for char in string:
+      if char == '\n':
+         continue
+      if char in shiftedLetters:
+         dev.write((SHIFT+NULL_CHAR+scancodes[char]+NULL_CHAR*5).encode())
 
-         else:
-            fd.write((NULL_CHAR*2+scancodes[char]+NULL_CHAR*5).encode())
-         fd.write((NULL_CHAR*8).encode())
+      else:
+         dev.write((NULL_CHAR*2+scancodes[char]+NULL_CHAR*5).encode())
+      dev.write((NULL_CHAR*8).encode())
+
 def keyCombo(string):
    with open('/dev/hidg0', 'rb+') as fd:
       #fd.write(report.encode())
@@ -66,7 +65,7 @@ def isInt(s):
 
 
 
-def processLine(line):
+def processLine(line, dev):
    toks = line.split(None, 1)
    if len(toks) >= 2:
       command, arguments = toks
@@ -102,13 +101,9 @@ def processLine(line):
       if argLen >= 2:
          sys.exit("Error in line "+str(lineNUmb)+". GUI can only have one CHAR as argument.")
       elif argLen == 0:
-         with open('/dev/hidg0', 'rb+') as fd:
-            fd.write((GUI+NULL_CHAR+NULL_CHAR*6).encode())
-            fd.close()
+         dev.write((GUI+NULL_CHAR+NULL_CHAR*6).encode())
       elif argLen == 1:
-         with open('/dev/hidg0', 'rb+') as fd:
-            fd.write((GUI+NULL_CHAR+scancodes[arguments]+NULL_CHAR*5).encode())
-            fd.close()
+         dev.write((GUI+NULL_CHAR+scancodes[arguments]+NULL_CHAR*5).encode())
       else:
          return False
 
@@ -187,14 +182,18 @@ for arg in sys.argv:
 filename = sys.argv[1]
 
 try:
-   script = open(filename, "r")
+   script = open(filename, "rb+")
+   device = open('/dev/hidg0', 'rb+')
 except:
-   sys.exit("Error: Can not open file")
+   sys.exit("Error: Can not open file or /dev/hidg0 does not exist.")
 
 lastLine = ""
 for lineNUmb, line in enumerate(script, start=1):
 
-   if not processLine(line):
+   if not processLine(line, device):
       sys.exit("Error: Line " + str(lineNUmb) + ": Command not recognized\nQuiting now")
    else:
       lastLine = line
+
+script.close()
+device.close()
