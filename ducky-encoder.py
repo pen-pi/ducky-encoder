@@ -265,17 +265,19 @@ try:
    script = open(filename, "r")
 except:
    sys.exit("Error: Can not open script file "+filename)
-try:
-   if dryrun:
-      device = open(devLocation, 'w+')
-   else:
-      device = open(devLocation, 'rb+')
-except:
-   sys.exit("Error: Can not open "+devLocation)
+
 
 lastLine = ""
 loop_delay = 50
 for lineNUmb, line in enumerate(script, start=1):
+   try:
+      if dryrun:
+         device = open(devLocation, 'w+')
+      else:
+         device = open(devLocation, 'rb+')
+   except:
+      sys.exit("Error: Can not open "+devLocation)
+
    toks = line.split(None, 1)
    if len(toks) >= 2:
       command, arguments = toks
@@ -298,9 +300,10 @@ for lineNUmb, line in enumerate(script, start=1):
       sys.exit("Error: Line " + str(lineNUmb) + ": Command not recognized\nQuiting now")
    else:
       lastLine = line
-   time.sleep(loop_delay/1000.0)
+
    device.write((NULL_CHAR*8).encode())
+   device.close()
+   time.sleep(loop_delay/1000.0)
 
 
 script.close()
-device.close()
