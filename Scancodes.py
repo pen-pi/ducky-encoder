@@ -5,18 +5,19 @@
 # http://www.mindrunway.ru/IgorPlHex/USBKeyScan.pdf
 
 NULL_CHAR = chr(0)
+NULL_MODIFIER = 0
 
-L_SHIFT = chr(2)
-R_SHIFT = chr(32)
+L_SHIFT = 2
+R_SHIFT = 32
 
-L_CTRL = chr(1)
-R_CTRL = chr(16)
+L_CTRL = 1
+R_CTRL = 16
 
-L_ALT = chr(4)
-R_ALT = chr(64)
+L_ALT = 4
+R_ALT = 64
 
-L_GUI = chr(8)
-R_GUI = chr(128)
+L_GUI = 8
+R_GUI = 128
 
 SHIFT = L_SHIFT
 GUI = L_GUI
@@ -101,7 +102,7 @@ scancodes = {
    "ESCAPE" : "29".decode("hex"),
    "BACKSPACE": "2A".decode("hex"),
    "TAB": "2B".decode("hex"),
-   "SPACEBAR": "2C".decode("hex"),
+   "SPACE": "2C".decode("hex"),
    " ": "2C".decode("hex"),
    "-": "2D".decode("hex"),
    "_": "2D".decode("hex"),
@@ -125,7 +126,7 @@ scancodes = {
    "<" : "36".decode("hex"),
    ">" : "37".decode("hex"),
    "?" : "38".decode("hex"),
-   "CapsLock": "39".decode("hex"),
+   "CAPSLOCK": "39".decode("hex"),
    "F1": "3A".decode("hex"),
    "F2": "3B".decode("hex"),
    "F3": "3C".decode("hex"),
@@ -138,19 +139,22 @@ scancodes = {
    "F10": "43".decode("hex"),
    "F11": "44".decode("hex"),
    "F12": "45".decode("hex"),
-   "PrintScreen" : "46".decode("hex"),
-   "ScrollLock" : "47".decode("hex"),
-   "Pause" : "48".decode("hex"),
-   "Insert" : "49".decode("hex"),
-   "Home" : "4A".decode("hex"),
-   "PageUp" : "4B".decode("hex"),
+   "PRINTSCREEN" : "46".decode("hex"),
+   "SCROLLLOCK" : "47".decode("hex"),
+   "PAUSE" : "48".decode("hex"),
+   "INSERT" : "49".decode("hex"),
+   "HOME" : "4A".decode("hex"),
+   "PAGEUP" : "4B".decode("hex"),
    "DELETE" : "4C".decode("hex"),
-   "End" : "4D".decode("hex"),
-   "PageDown" : "4E".decode("hex"),
-   "RightArrow" : "4F".decode("hex"),
-   "LeftArrow" : "50".decode("hex"),
-   "DownArrow" : "51".decode("hex"),
-   "UpArrow" : "52".decode("hex")#,
+   "END" : "4D".decode("hex"),
+   "PAGEDOWN" : "4E".decode("hex"),
+   "RIGHT" : "4F".decode("hex"),
+   "LEFT" : "50".decode("hex"),
+   "DOWN" : "51".decode("hex"),
+   "UP" : "52".decode("hex"),
+   "APP" : "65".decode("hex"),
+   "NUMLOCK" : "53".decode("hex")
+
    #"GUI": "E3".decode("hex")
 }
 
@@ -170,7 +174,6 @@ shiftedLetters = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P
    # 0x02  Keyboard POSTFail
    # 0x03  Keyboard ErrorUndefined
    # 0x32  Keyboard Non-US # and ~
-   # 0x53  Keypad Num Lock and Clear
    # 0x54  Keypad /
    # 0x55  Keypad *
    # 0x56  Keypad -
@@ -188,7 +191,6 @@ shiftedLetters = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P
    # 0x62  Keypad 0 and Insert
    # 0x63  Keypad . and Delete
    # 0x64  Keyboard Non-US \ and |
-   # 0x65  Keyboard Application
    # 0x66  Keyboard Power
    # 0x67  Keypad =
    # 0x68  Keyboard F13
