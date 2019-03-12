@@ -1,0 +1,7 @@
+DELAY 5000
+STRING iexplore http://s3.amazonaws.com/rapgenius/hotdog.jpg
+DELAY 500
+ENTER
+DELAY 750
+STRING Hello World!
+ENTER
