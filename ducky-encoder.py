@@ -30,7 +30,8 @@ def stringToReport(string, dev):
       if char in shiftedLetters:
          dev.write((chr(SHIFT)+NULL_CHAR+scancodes[char]+NULL_CHAR*5).encode())
 
-      else:
+      else: # if not shifted then do normal
+         # print("not shifted", char)
          dev.write((NULL_CHAR*2+scancodes[char]+NULL_CHAR*5).encode())
       dev.write((NULL_CHAR*8).encode())
 

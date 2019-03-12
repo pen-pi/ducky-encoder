@@ -109,7 +109,7 @@ scancodes = {
    "=": "2E".decode("hex"),
    "[": "2F".decode("hex"),
    "]": "30".decode("hex"),
-   "\\": 0x31, #backslash
+   "\\": "31".decode("hex"), #backslash
    "+": "2E".decode("hex"),
    "{": "2F".decode("hex"),
    "}": "30".decode("hex"),
