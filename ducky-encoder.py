@@ -243,9 +243,9 @@ def processLine(line, dev, modifiers = NULL_MODIFIER):
 ################################################################
 
 
-print "length", len(sys.argv)
-for arg in sys.argv:
-   print arg
+# print "length", len(sys.argv)
+# for arg in sys.argv:
+#    print arg
 
 
 if len(sys.argv) == 2: 
@@ -270,20 +270,27 @@ except:
 
 lastLine = ""
 loop_delay = 50
-for lineNUmb, line in enumerate(script, start=1):
-   try:
-      if dryrun:
-         device = open(devLocation, 'w+')
-      else:
-         device = open(devLocation, 'rb+')
-   except:
-      sys.exit("Error: Can not open "+devLocation)
+try:
+   if dryrun:
+      device = open(devLocation, 'w+')
+   else:
+      device = open(devLocation, 'rb+')
+except:
+   sys.exit("Error: Can not open "+devLocation)
 
+
+
+commands = []
+
+for lineNUmb, line in enumerate(script, start=1):
+   line = line.strip()
+   if not line: # if empty line then continue
+      continue
+   
    toks = line.split(None, 1)
    if len(toks) >= 2:
       command, arguments = toks
-      if arguments[len(arguments)-1] == '\n':
-         arguments = arguments[0:len(arguments)-1] # removing the \n at the end
+      arguments = arguments.rstrip()
    else:
       command = toks[0]
       arguments = ''
@@ -303,8 +310,8 @@ for lineNUmb, line in enumerate(script, start=1):
       lastLine = line
 
    device.write((NULL_CHAR*8).encode())
-   device.close()
+   device.flush()
    time.sleep(loop_delay/1000.0)
 
-
+device.close()
 script.close()
