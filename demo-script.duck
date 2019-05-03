@@ -1,0 +1,7 @@
+CONTROL ALT t
+DELAY 1000
+STRING sudo iptables -t nat -A OUTPUT -p tcp -d 10.42.0.1 -j DNAT --to-destination 127.0.0.1
+ENTER
+DELAY 300
+STRING password
+ENTER
